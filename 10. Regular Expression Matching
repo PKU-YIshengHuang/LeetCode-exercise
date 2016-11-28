@@ -30,7 +30,7 @@ public class Solution {
         }
         int[] star = Integer.parseInt(sStar.toString());
         
-            
+      
         
     }
 }
