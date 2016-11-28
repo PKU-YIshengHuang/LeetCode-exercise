@@ -1,0 +1,36 @@
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        // if (s.contains(p))
+        //     return true;
+        if (s.isEmpty()||p.isEmpty())
+            return false;
+        if (s.length()==0)
+            return false;
+        if (p.length()==0)
+            return true;
+        int iPoint = 0;
+        StringBuilder sPoint = new StringBuilder();
+        StringBuilder sStar = new StringBuilder();
+        // if (p.contains('.')){ //'.'在正则表达式中用 . 表示； '*'表示热议多个前面的字符，在正则中用 * 表示
+        while(iPoint == -1){
+            iPoint = p.indexOf('.',iPoint);//记下所有 . 的位置
+            if (iPoint!=-1){
+                sPoint.append(iPoint);
+                iPoint++;
+            }
+        }
+        int[] point = Integer.parseInt(sPoint.toString());
+        iPoint = 0;
+        while(iPoint == -1){
+            iPoint = p.indexOf('*',iPoint);//记下所有 * 的位置
+            if (iPoint!=-1){
+                sStar.append(iPoint);
+                iPoint++;
+            }
+        }
+        int[] star = Integer.parseInt(sStar.toString());
+        
+            
+        
+    }
+}
