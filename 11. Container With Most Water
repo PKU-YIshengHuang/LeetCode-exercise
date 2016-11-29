@@ -1,0 +1,15 @@
+public class Solution {
+    public int maxArea(int[] height) {
+        if (height.length < 2)
+            return 0;
+        int mArea = 0;
+        for(int i=0;i<height.length-1;i++){
+            for(int j=i+1;j<height.length;j++){
+                if (Math.min(height[j],height[i])*(j-i)>mArea)
+                   mArea =Math.min(height[j],height[i])*(j-i);
+            }
+        }
+        return mArea;
+    }
+}
+//效率有点低，出现了 Time Limit Exceeded
