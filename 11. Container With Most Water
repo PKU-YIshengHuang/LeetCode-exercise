@@ -1,15 +1,19 @@
+//效率高了，两端进行搜索
 public class Solution {
-    public int maxArea(int[] height) {
-        if (height.length < 2)
-            return 0;
-        int mArea = 0;
-        for(int i=0;i<height.length-1;i++){
-            for(int j=i+1;j<height.length;j++){
-                if (Math.min(height[j],height[i])*(j-i)>mArea)
-                   mArea =Math.min(height[j],height[i])*(j-i);
-            }
-        }
-        return mArea;
-    }
+   public int maxArea(int[] height) {
+    int left = 0, right = height.length - 1;
+	int maxArea = 0;
+
+	while (left < right) {
+		maxArea = Math.max(maxArea, Math.min(height[left], height[right])
+				* (right - left));
+		if (height[left] < height[right])
+			left++;
+		else
+			right--;
+	}
+
+	return maxArea;
+       
+   }
 }
-//效率有点低，出现了 Time Limit Exceeded
