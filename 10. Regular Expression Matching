@@ -1,29 +1,26 @@
 public class Solution {
-    public static boolean isMatch(String s, String p) {
-        if (p.length() == 0)
-            return s.length() == 0;
+   public int maxArea(int[] height) {
+    if(height == null || height.length < 2) 
+        return 0;
+    int left = 0, right = height.length - 1;
+	int maxArea = 0;
 
-        // length == 1 is the case that is easy to forget.
-        // as p is subtracted 2 each time, so if original
-        // p is odd, then finally it will face the length 1
-        if (p.length() == 1)
-            return (s.length() == 1) && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.');
+	while (left < right) {
+		maxArea = Math.max(maxArea, Math.min(height[left], height[right])
+				* (right - left));
+		if (height[left] < height[right])
+			left++;
+		else
+		    if(height[left]>height[right])
+			    right--;
+			else 
+			    if(height[left+1]>=height[right-1]) 
+			        left++;
+			    else
+			       right--; 
+	}
 
-        // next char is not '*': must match current character
-        if (p.charAt(1) != '*') {
-            if (s.length() == 0)
-                return false;
-            else
-                return (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')
-                        && isMatch(s.substring(1), p.substring(1));
-        }else{
-            // next char is *
-            while (s.length() > 0 && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.')) {
-                if (isMatch(s, p.substring(2))) 
-                    return true;
-                s = s.substring(1);
-            }
-            return isMatch(s, p.substring(2));
-        }
-    }
+	return maxArea;
+       
+   }
 }
