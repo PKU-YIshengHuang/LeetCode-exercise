@@ -1,0 +1,75 @@
+package LeetCode008;
+/**
+ * 解决了多个字符串中相同的最大子串问题
+ * 但是和题目要求的不一样，题目是要求从前缀开始，只需要使用 startWith（）函数即可
+ * @author pc
+ *
+ */
+public class LongestString {
+
+	public static void main(String[] args) {
+		String[] str = {"ewabcdefg","oijuykliamcldpabc","lxxxxxxxabcxxxx"};
+		String aString = new Solution3().longestCommonPrefix(str);
+		System.out.println(aString);
+	}
+
+}
+
+class Solution3 {
+    public String longestCommonPrefix(String[] str) {
+        if(str.length == 0)
+            return "";
+        if(str.length == 1)
+            return str[0];
+        int flag = 0, count = 1, j = 0;
+        
+        String aString = null, temp0 = "", temp= "";
+        boolean Check = false;
+        //挑出长度最小的那个字符串
+        for(int i=0;i<str.length;i++){
+            if(str[flag].length()>str[i].length())
+                flag = i;
+        }
+        if(str[flag].length()==1)
+        	return str[flag];
+        
+        int k = str[flag].length()-1;   //每次都从最后开始往回索引；
+        boolean unfinished = true;
+        while(unfinished){
+            for(int i=0;i<str.length;i++){
+                if(i == flag)
+                    continue;   //跳过flag串自己的比较情况；
+                if(count == 1){     //将最短串与第一个串比较，得到一个temp前缀字符串；               	 
+                	for ( ;j<str[flag].length()-1;j++){
+                        while(k+1>j){    //当j位置找不到，就j+1位置找                   
+                            if(str[i].indexOf(str[flag].substring(j,k+1))!=-1){
+                                temp0 = str[flag].substring(j,k+1);
+                                if(temp0.length()>temp.length()){
+                                	temp = temp0;
+                                	Check = true;
+                                }
+                            }   //找到了一个k-j长度的串；
+                            k--;              
+                        } 
+                        k = str[flag].length()-1; //很重要的一条，每次比完一个j，没有找到，k需要重置；如果找到了，就之前return了，j，k的值不变
+                    }
+                	count++;
+                }
+                else{   //后续的字符串与上述得到的temp的字符串前缀比较，有则是true
+                    Check = str[i].indexOf(temp)== -1 ? false: true;
+                    if(!Check) break;
+                }
+            }
+                    
+            if(Check) {
+                unfinished = false;
+                aString = temp;
+            }
+            else{
+                //如果该前缀串没有和剩下的串匹配
+                count = 1;
+            }
+        }
+        return aString;
+    }   
+}
